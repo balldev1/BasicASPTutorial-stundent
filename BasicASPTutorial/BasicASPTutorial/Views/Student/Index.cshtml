@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Student>;
+
+@{
+    ViewData["Title"] = "HomePage";
+}
+
+@if(Model.Count()>0)
+{
+    <h1 class="text-center">Score Computer</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Result</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.Name</td>
+                    <td>@student.Score</td>
+                    @if (@student.Score>=50)
+                        {
+                        <td class="bg-success">PASS</td>
+                    }
+                    else
+                    {
+                        <td>Not Pass</td>
+                    }
+
+                    <td>
+                        <a class="btn btn-warning"
+                   asp-controller="Student"
+                   asp-action="Edit"
+                   asp-route-id="@student.Id">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger"
+                   asp-controller="Student"
+                   asp-action="Delete"
+                   asp-route-id="@student.Id"
+                           onclick="return confirm('Do you want to delete @student.Name ?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-secondary">No student information</div>
+}
+
